@@ -1,31 +1,23 @@
-const { writeFile, readFile} = require ('fs');
+const fs = require('fs');
 
-console.log('start');
+console.log('starting the task');
 
-readFile('./content/first.txt', 'utf8', (error, result) => {
-    if (error){
-        console.log(error);
-        return;
+const readFile = fs.readFile('./content/first.txt', 'utf8', (err, data) => {
+    if (err){
+        throw err
     }
-    const first = result;
-    console.log(first);
-    readFile('./content/second.txt', 'utf8', (error, result) => {
-        if (error){
-            console.log(error);
-            return;
+    console.log(data)
+    console.log('starting the next one')
+    fs.readFile('./content/subfolder/test.txt', 'utf8', (err, data) => {
+        if (err){
+            throw err;
         }
-        const second = result;
-        console.log(second);
-writeFile(
-    './content/result2.txt', `This is the result : ${first}, ${second}`
-, (error, result) => {
-    if (error) {
-        console.log(error);
-        return;
-    }
-    console.log('Done with this task');
-})
-  })
+    console.log(data)
+
+    const writeFile = fs.writeFile('./content/result.txt', 'I am the one in charge now', (err, data)=>{
+        if (err) throw err
+    })
+    })
 })
 
-console.log('starting the next task');
+console.log('end of task')
